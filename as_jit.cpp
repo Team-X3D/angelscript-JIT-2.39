@@ -1707,12 +1707,9 @@ int asCJITCompiler::CompileFunction(asIScriptFunction *function, asJITFunction *
 			break;
 		//case asBC_PshRPtr: //All pushes are handled above, near asBC_PshC4
 		case asBC_STR:
-			{
-				const asCString &str = ((asCScriptEngine*)function->GetEngine())->GetConstantString(asBC_WORDARG0(pOp));
-				esi -= sizeof(void*) + sizeof(asDWORD);
-				as<void*>(*esi + sizeof(asDWORD)) = (void*)str.AddressOf();
-				as<asDWORD>(*esi) = (asDWORD)str.GetLength();
-			} break;
+			// asBC_STR is deprecated as of AngelScript 2.39, string literals now compile to asBC_PGA
+			Return(true);
+			break;
 		case asBC_CALLSYS:
 		case asBC_Thiscall1:
 			{
